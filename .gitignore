@@ -2,3 +2,4 @@
 lessons/.ipynb_checkpoints/*
 lessons/example_filename.png
 .idea/*
+lessons/*.db
