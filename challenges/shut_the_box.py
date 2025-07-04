@@ -111,7 +111,9 @@ class ShutTheBox:
 
 
 class ShutTheBoxPlayer:
-    def __init__(self):
+    def __init__(self, max_number: int = 9, dice_sides: int = 6):
+        self.max_number = max_number
+        self.dice_sides = dice_sides
         return
     
     def get_move(self, stb: ShutTheBox) -> list[int] | None:
@@ -121,7 +123,7 @@ class ShutTheBoxPlayer:
         return available_moves[0]
     
     def play_game(self) -> int:
-        stb = ShutTheBox()
+        stb = ShutTheBox(max_number=self.max_number, dice_sides=self.dice_sides)
         while not stb.is_game_over():
             move = self.get_move(stb)
             if move is None:
@@ -139,7 +141,8 @@ class ShutTheBoxPlayer:
         return wins / number_of_games
 
 class RandomPlayer(ShutTheBoxPlayer):
-    def __init__(self, one_die: bool = True):
+    def __init__(self, one_die: bool = True, max_number: int = 9, dice_sides: int = 6):
+        ShutTheBoxPlayer.__init__(self, max_number=max_number, dice_sides=dice_sides)
         self._one_die = one_die
 
     def get_move(self, stb: ShutTheBox) -> list[int] | None:
@@ -149,7 +152,8 @@ class RandomPlayer(ShutTheBoxPlayer):
         return random.choice(available_moves)
 
 class SimpleLookaheadPlayer(ShutTheBoxPlayer):
-    def __init__(self, one_die: bool = True):
+    def __init__(self, one_die: bool = True, max_number: int = 9, dice_sides: int = 6):
+        ShutTheBoxPlayer.__init__(self, max_number=max_number, dice_sides=dice_sides)
         self._one_die = one_die
         self._max_depth = 3
     
@@ -170,8 +174,8 @@ class SimpleLookaheadPlayer(ShutTheBoxPlayer):
     
     
 ## Testing
-#player = ShutTheBoxPlayer()
-#print(player.get_win_rate(verbose=True))
+# player = ShutTheBoxPlayer()
+# print(player.get_win_rate(verbose=True))
 # player = RandomPlayer(one_die=False)
 # print(player.get_win_rate(verbose=True))
 # player = SimpleLookaheadPlayer(one_die=False)
